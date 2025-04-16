@@ -4,7 +4,7 @@ import random
 import time
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
-from typing import TextIO, Tuple
+from typing import TextIO, Tuple, List
 
 from ..ai.blackbox import BlackboxChat, BlackboxError
 from ..api import ApiError, BadRequest
@@ -19,6 +19,16 @@ from ..utils import (fix_datetime, parse_interval, parse_invalid_datetime,
 from hh_applicant_tool.ai import blackbox
 
 logger = logging.getLogger(__package__)
+
+STOP_WORDS = [
+    "lead", "Teamlead", "стажёр", "стажер", "Архитектор", 
+    "преподаватель", "продажи", "продажам", "торговых", 
+    "PHP", "Angular", "flutter", "kotlin", "Python", "javascript", "Java", "rust", "oracle", 
+    "c++", "Laravel", "lua", "stm", "qa", "elixir", "1c", "Node.js", "NodeJS", "golang", 
+    "Кликхаус", "clickhouse", "aso", "ruby", "postgresql", "mssql", 
+    "Артист", "Artist", "аналитик", "Analyst", "HTMX", "Helix", 
+    "Cyber", "SQL", "Delphi", "Vue"
+]
 
 
 class Namespace(BaseNamespace):
@@ -233,6 +243,21 @@ class Operation(BaseOperation, GetResumeIdMixin):
                         "Пропускаем вакансию в архиве: %s",
                         vacancy["alternate_url"],
                     )
+                    continue
+                
+                skip_vacancy = False
+                vacancy_name = vacancy.get("name", "")
+                for stop_word in STOP_WORDS:
+                    if stop_word.lower() in vacancy_name.lower():
+                        logger.info(
+                            "Пропускаем вакансию с '%s' в названии: %s",
+                            stop_word,
+                            vacancy["alternate_url"],
+                        )
+                        skip_vacancy = True
+                        break
+                
+                if skip_vacancy:
                     continue
 
                 relations = vacancy.get("relations", [])

@@ -62,6 +62,7 @@ $ pipx upgrade hh-applicant-tool
   Данная политика разрешает текущему пользователю (от которого зашли) запускать скрипты. Без нее не будут работать виртуальные окружения.
 * Создайте и активируйте виртуальное окружение:
   ```ps
+  python -m venv hh-applicant-venv
   PS> python -m pip venv hh-applicant-venv
   PS> .\hh-applicant-venv\Scripts\activate
   ```
@@ -209,7 +210,7 @@ https://hh.ru/employer/5190600
 https://hh.ru/employer/607484
 https://hh.ru/employer/9386615
 https://hh.ru/employer/80660
-https://hh.ru/employer/6078902
+https://hh.ru/employer/6078d902
 https://hh.ru/employer/1918903
 ```
 
