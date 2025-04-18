@@ -129,7 +129,7 @@ class HHApplicantTool:
     def run(self, argv: Sequence[str] | None) -> None | int:
         parser = self.create_parser()
         args = parser.parse_args(argv, namespace=Namespace())
-        log_level = max(logging.DEBUG, logging.WARNING - args.verbosity * 10)
+        log_level = max(logging.DEBUG, logging.INFO)  # Always show at least INFO level logs
         logger.setLevel(log_level)
         handler = ColorHandler()
         # [C] Critical Error Occurred

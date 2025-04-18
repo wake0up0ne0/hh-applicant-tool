@@ -249,9 +249,10 @@ class Operation(BaseOperation, GetResumeIdMixin):
                 vacancy_name = vacancy.get("name", "")
                 for stop_word in STOP_WORDS:
                     if stop_word.lower() in vacancy_name.lower():
-                        logger.info(
-                            "Пропускаем вакансию с '%s' в названии: %s",
+                        logger.error(
+                            "Пропускаем вакансию с '%s' в названии: %s %s",
                             stop_word,
+                            truncate_string(vacancy["name"]),
                             vacancy["alternate_url"],
                         )
                         skip_vacancy = True
@@ -310,17 +311,19 @@ class Operation(BaseOperation, GetResumeIdMixin):
                         telemetry_data["employers"][employer_id] = employer_data
 
                 if not do_apply:
-                    logger.debug(
-                        "Пропускаем вакансию так как достигла лимита заявок: %s",
+                    logger.info(
+                        "Пропускаем вакансию так как достигли лимита заявок: %s",
                         vacancy["alternate_url"],
                     )
+                    print(f"\nПропуск из-за лимита откликов: {vacancy_name}")
                     continue
 
                 if relations:
-                    logger.debug(
+                    logger.info(
                         "Пропускаем вакансию с откликом: %s",
                         vacancy["alternate_url"],
                     )
+                    print(f"\nПропуск из-за наличия отклика relations={relations}: {vacancy_name}")
                     continue
 
                 params = {
@@ -360,16 +363,20 @@ class Operation(BaseOperation, GetResumeIdMixin):
                     )
                     continue
 
-                # Задержка перед отправкой отклика
-                interval = random.uniform(
-                    self.apply_min_interval, self.apply_max_interval
-                )
-                time.sleep(interval)
+                # Начинаем процесс отправки отклика
+                print(f"\nНачинаем отправку отклика на вакансию: {vacancy_name}")
+                
+                # Задержка перед отправкой отклика (5-10 секунд)
+                delay = random.uniform(5, 10)
+                print(f"Waiting for {delay:.2f} seconds before sending application...")
+                time.sleep(delay)
+
+                print(f"Sending application to API...")
 
                 res = self.api.post("/negotiations", params)
                 assert res == {}
                 print(
-                    "📨 Отправили отклик",
+                    "\n📨 Отправили отклик",
                     vacancy["alternate_url"],
                     "(",
                     truncate_string(vacancy["name"]),
