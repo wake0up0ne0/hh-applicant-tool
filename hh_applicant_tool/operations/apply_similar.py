@@ -24,10 +24,10 @@ STOP_WORDS = [
     "lead", "Teamlead", "стажёр", "стажер", "Архитектор", 
     "преподаватель", "продажи", "продажам", "торговых", 
     "PHP", "Angular", "flutter", "kotlin", "Python", "javascript", "Java", "rust", "oracle", 
-    "c++", "Laravel", "lua", "stm", "qa", "elixir", "1c", "Node.js", "NodeJS", "golang", 
+    "c++","С++""Laravel", "lua", "stm", "qa", "elixir", "1c", "Node.js", "NodeJS", "golang", 
     "Кликхаус", "clickhouse", "aso", "ruby", "postgresql", "mssql", 
     "Артист", "Artist", "аналитик", "Analyst", "HTMX", "Helix", 
-    "Cyber", "SQL", "Delphi", "Vue"
+    "Cyber", "SQL", "Delphi", "Vue", "Репетитор", "РНР", "ColdFusion","Odoo", "Frontend", " С ", "Manager", "менеджер", "Power Platform", "Unreal", "Roblox", "Intern", "интерн", "elma"
 ]
 
 
@@ -319,11 +319,7 @@ class Operation(BaseOperation, GetResumeIdMixin):
                     continue
 
                 if relations:
-                    logger.info(
-                        "Пропускаем вакансию с откликом: %s",
-                        vacancy["alternate_url"],
-                    )
-                    print(f"\nПропуск из-за наличия отклика relations={relations}: {vacancy_name}")
+
                     continue
 
                 params = {
@@ -363,16 +359,8 @@ class Operation(BaseOperation, GetResumeIdMixin):
                     )
                     continue
 
-                # Начинаем процесс отправки отклика
-                print(f"\nНачинаем отправку отклика на вакансию: {vacancy_name}")
-                
-                # Задержка перед отправкой отклика (5-10 секунд)
                 delay = random.uniform(5, 10)
-                print(f"Waiting for {delay:.2f} seconds before sending application...")
                 time.sleep(delay)
-
-                print(f"Sending application to API...")
-
                 res = self.api.post("/negotiations", params)
                 assert res == {}
                 print(
