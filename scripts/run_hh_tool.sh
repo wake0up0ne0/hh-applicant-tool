@@ -4,7 +4,7 @@
 HH_TOOL_DIR="$(dirname "$(dirname "$0")")"
 VENV_PATH="$HH_TOOL_DIR/.venv"
 LOG_DIR="$HH_TOOL_DIR/logs"
-LOG_FILE="$LOG_DIR/hh_tool_$(date +%Y%m%d).log"
+LOG_FILE="$LOG_DIR/hh_tool_$(date +%Y%m%d_%H%M%S).log"
 
 # Create log directory if it doesn't exist
 mkdir -p "$LOG_DIR"
