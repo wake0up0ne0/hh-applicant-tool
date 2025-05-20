@@ -27,7 +27,7 @@ STOP_WORDS = [
     "c++","С++""Laravel", "lua", "stm", "qa", "elixir", "1c", "Node.js", "NodeJS", "golang", 
     "Кликхаус", "clickhouse", "aso", "ruby", "postgresql", "mssql", 
     "Артист", "Artist", "аналитик", "Analyst", "HTMX", "Helix", 
-    "Cyber", "SQL", "Delphi", "Vue", "Репетитор", "РНР", "ColdFusion","Odoo", "Frontend", " С ", "Manager", "менеджер", "Power Platform", "Unreal", "Roblox", "Intern", "интерн", "elma"
+    "Cyber", "SQL", "Delphi", "Vue", "Репетитор", "РНР", "ColdFusion","Odoo", "Frontend", " С ", "Manager", "менеджер", "Power Platform", "Unreal", "Roblox", "Intern", "интерн", "elma", "lua"
 ]
 
 
