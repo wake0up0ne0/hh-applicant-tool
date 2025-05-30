@@ -18,7 +18,7 @@ echo "Starting job at $(date)" >> "$LOG_FILE"
 
 # Run the tool with any needed arguments
 cd "$HH_TOOL_DIR"
-hh-applicant-tool apply-similar >> "$LOG_FILE" 2>&1
+hh-applicant-tool -vvv apply-similar >> "$LOG_FILE" 2>&1
 
 # Log end time
 echo "Job completed at $(date)" >> "$LOG_FILE"
